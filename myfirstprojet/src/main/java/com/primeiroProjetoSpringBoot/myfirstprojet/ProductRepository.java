@@ -8,20 +8,20 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryRepository {
+public class ProductRepository {
 
-    private Map<Long, Category> map = new HashMap<>();
+    private Map<Long, Product> map = new HashMap<>();
 
-    public void save(Category obj) {
+    public void save(Product obj) {
         map.put(obj.getId(), obj);
 
     }
 
-    public Category findById(Long id) {
+    public Product findById(Long id) {
         return map.get(id);
     }
 
-    public List<Category> findAll() {
-        return new ArrayList<Category>(map.values());
+    public List<Product> findAll() {
+        return new ArrayList<Product>(map.values());
     }
 }

@@ -1,27 +1,26 @@
 package com.primeiroProjetoSpringBoot.myfirstprojet;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-public class Category implements Serializable {
+public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
+
     private Long id;
     private String name;
+    private Double price;
 
+    // composicao, relacao 1 para muitos
+    private Category category;
 
-    @JsonIgnore//nao é para serializar a lista de produto de uma categoria
-    private List<Product> products = new ArrayList<>();
-
-    public Category() {
-
+    public Product() {
     }
 
-    public Category(Long id, String name) {
+    public Product(Long id, String name, Double price, Category category) {
+
         this.id = id;
         this.name = name;
+        this.price = price;
+        this.category = category;
     }
 
     public Long getId() {
@@ -40,17 +39,30 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((category == null) ? 0 : category.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((products == null) ? 0 : products.hashCode());
+        result = prime * result + ((price == null) ? 0 : price.hashCode());
         return result;
     }
 
@@ -62,7 +74,12 @@ public class Category implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Category other = (Category) obj;
+        Product other = (Product) obj;
+        if (category == null) {
+            if (other.category != null)
+                return false;
+        } else if (!category.equals(other.category))
+            return false;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -73,10 +90,10 @@ public class Category implements Serializable {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (products == null) {
-            if (other.products != null)
+        if (price == null) {
+            if (other.price != null)
                 return false;
-        } else if (!products.equals(other.products))
+        } else if (!price.equals(other.price))
             return false;
         return true;
     }
